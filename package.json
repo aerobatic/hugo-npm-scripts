@@ -1,0 +1,22 @@
+{
+  "name": "hugo-npm-scripts",
+  "version": "1.0.0",
+  "description": "Demo of building Hugo and front-end assets with npm scripts",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -f static/*.js static/*.css",
+    "js:compile": "uglifyjs src/js/*.js -b -o static/site.min.js",
+    "js:watch": "onchange 'src/js/**/*' -- npm run js:compile",
+    "sass:watch": "node-sass -w src/sass -r -o static/css",
+    "sass:build": "node-sass src/sass/site.scss static/site.css",
+    "css:watch": "onchange 'src/sass/**/*' -- npm run css:compile",
+    "start": "npm run clean && npm run sass:build && parallelshell 'npm run sass:watch' 'npm run js:watch' 'hugo serve'"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "node-sass": "^4.1.1",
+    "onchange": "^3.2.1",
+    "parallelshell": "^2.0.0",
+    "uglify-js": "^2.7.5"
+  }
+}
